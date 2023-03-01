@@ -3,7 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
   descriptions: string,
-  contents: string
+  contents: string,
+  summary: string
 }
 
 interface Article {
@@ -37,11 +38,13 @@ export default function handler(
 
   let descriptions = '';
   let contents = '';
+  let summary = '';
 
   b.articles.forEach((article, i) => {
     descriptions += `Article description ${i}: ${article.description}\n\n`;
     contents += `Article content ${i}: ${article.content}\n\n`;
+    summary += `Article summary ${i}: title: ${article.title}, description: ${article.description}, content: ${article.content}`
   })
 
-  res.status(200).json({ descriptions, contents })
+  res.status(200).json({ descriptions, contents, summary })
 }
