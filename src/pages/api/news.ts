@@ -41,9 +41,7 @@ export default function handler(
   let summary = '';
 
   b.articles.forEach((article, i) => {
-    descriptions += `Article description ${i}: ${article.description}\n\n`;
-    contents += `Article content ${i}: ${article.content}\n\n`;
-    summary += `Article summary ${i}: title: ${article.title}, description: ${article.description}, content: ${article.content}`
+    summary += `Title ${i}: ${article.title}, Description ${i}: ${article.description}, Content ${i} ${article.content}; `
   })
 
   res.status(200).json({ descriptions, contents, summary })
