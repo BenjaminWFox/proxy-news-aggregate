@@ -9,23 +9,23 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('Endpoint called: /text');
+
   if (req.method !== 'POST') {
     res.status(405).json({ message: 'Method Not Allowed'});
     return;
   }
 
-  console.log(req.body)
-
   try {
     const {text} = req.body as Body;
-
-    console.log('Body', text)
 
     if (!text) {
       res.status(500).json({ message: `You must provide text`});  
     }
 
-    res.status(200).json({ message: `You provided this text: ${text}`});
+    console.log(' - ', text);
+
+    res.status(200).json({ message: `You provided this text: ${text}`, data: text});
   } catch (e) {
     res.status(500).json({ message: `There was an error: ${JSON.stringify(e)}`});
   }

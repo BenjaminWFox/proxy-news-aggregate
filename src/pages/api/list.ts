@@ -7,20 +7,23 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log('Endpoint called: /list');
+
   if (req.method !== 'POST') {
+    console.log(' - 405 Method Not Allowed')
     res.status(405).json({ message: 'Method Not Allowed'});
     return;
   }
 
-  console.log(req.body)
-
   try {
     const unknownItemTypeList = req.body as List;
     if (!unknownItemTypeList || !unknownItemTypeList.length) {
+      console.log(' - 500 No or Empty List Provided')
       res.status(500).json({ message: `You must provide a list with items`});  
       
       return;
     }
+
 
     const i0 = unknownItemTypeList[0];
     const list = unknownItemTypeList as Array<typeof i0>;
@@ -33,13 +36,19 @@ export default function handler(
     })
 
     if (typeError) {
+      console.log(' - 500', typeError)
+
       res.status(500).json({ message: typeError});  
       
       return;
     }
 
+    console.log(' - ', list);
+
     res.status(200).json({ message: `You provided this list: ${JSON.stringify(list)}`, data: list});
   } catch (e) {
+    console.log(' - 500 Error', e)
+
     res.status(500).json({ message: `There was an error: ${JSON.stringify(e)}`});
   }
 }
