@@ -11,5 +11,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  res.status(200).json({ notAString: 1234, notANumber: "asdf", notABoolean: "asdf" })
+  res.status(200).json({
+    notAString: 1234,
+    notANumber: "asdf",
+    notABoolean: "asdf"
+  })
 }
