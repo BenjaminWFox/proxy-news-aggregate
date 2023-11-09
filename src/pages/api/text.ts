@@ -14,14 +14,18 @@ export default function handler(
     return;
   }
 
-  try {
-    const body = (JSON.parse(req.body) as Body);
+  console.log(req.body)
 
-    if (!body.text) {
+  try {
+    const {text} = req.body as Body;
+
+    console.log('Body', text)
+
+    if (!text) {
       res.status(500).json({ message: `You must provide text`});  
     }
 
-    res.status(200).json({ message: `You provided this text: ${body.text}`});
+    res.status(200).json({ message: `You provided this text: ${text}`});
   } catch (e) {
     res.status(500).json({ message: `There was an error: ${JSON.stringify(e)}`});
   }
