@@ -9,6 +9,91 @@
     "url": "https://proxy-news-aggregate.vercel.app/api"
   }],
   "paths": {
+    "/primitives": {
+      "get": {
+        "operationId": "sendQueryParams",
+        "summary": "Send query params `str`, `num`, and/or `bool` to the TESTAPI and receive that same query in response.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "str",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "num",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "bool",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "str": {
+                      "type": "string"
+                    },
+                    "num": {
+                      "type": "number"
+                    },
+                    "bool": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Unsupported Method",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/text": {
       "post": {
         "operationId": "sendTextBody",
