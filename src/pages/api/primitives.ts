@@ -34,9 +34,11 @@ export default function handler(
       return;
     }
 
-    console.log(' - ', str, num, bool);
+    const setBool = (bool as string).toLowerCase() === 'false' ? false : Boolean(bool);
 
-    res.status(200).json({ message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}`, data: { str, num: Number(num), bool: Boolean(bool)}});
+    console.log(' - ', str, num, setBool);
+
+    res.status(200).json({ message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}`, data: { str, num: Number(num), bool: Boolean(setBool)}});
   } catch (e) {
     res.status(500).json({ message: `There was an error: ${JSON.stringify(e)}`});
   }
