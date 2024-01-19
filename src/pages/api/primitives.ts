@@ -37,8 +37,10 @@ export default function handler(
       console.log('500 - bool not true or false');
 
       return;
-    } else if (typeof bool !== undefined) {
-      setBool = (bool as string).toLowerCase() === 'false' ? false : Boolean(bool);
+    } else if (typeof bool !== 'undefined') {
+      setBool = Boolean(setBool)
+    } else {
+      setBool = null;
     }
 
     if (date) {
@@ -60,7 +62,7 @@ export default function handler(
       data: {
         str: str || null,
         num: Number(num) || null,
-        bool: typeof setBool === 'undefined' ? null : Boolean(setBool),
+        bool: setBool,
         date: d?.toLocaleDateString() || null,
         datetime: dt?.toLocaleString() || null,
       }
