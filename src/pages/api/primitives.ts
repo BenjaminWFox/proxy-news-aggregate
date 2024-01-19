@@ -5,7 +5,12 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log('Endpoint called: /text');
+  console.log('Endpoint called: /primitives');
+
+  let setBool;
+  let d;
+  let dt;
+
 
   if (req.method !== 'GET') {
     res.status(405).json({ message: 'Method Not Allowed'});
@@ -27,23 +32,37 @@ export default function handler(
       return;
     }
 
-    if (bool && (bool as string).toLowerCase() !== 'false' && (bool as string).toLowerCase() !== 'true') {
+    if (typeof bool !== 'undefined' && (bool as string).toLowerCase() !== 'false' && (bool as string).toLowerCase() !== 'true') {
       res.status(500).json({ message: "`bool` must be either 'true' or 'false'"});
       console.log('500 - bool not true or false');
 
       return;
+    } else if (typeof bool !== undefined) {
+      setBool = (bool as string).toLowerCase() === 'false' ? false : Boolean(bool);
     }
 
-    const setBool = (bool as string).toLowerCase() === 'false' ? false : Boolean(bool);
+    if (date) {
+      try {
+        d = (new Date(date as string))
+      } catch {}
+    }
+
+    if (datetime) {
+      try {
+        dt = new Date(datetime as string);
+      } catch {}
+    }
 
     console.log(' - ', str, num, setBool);
 
     res.status(200).json({
       message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}, date: ${date}, datetime: ${datetime}`,
       data: {
-        str,
-        num: Number(num),
-        bool: Boolean(setBool)
+        str: str || undefined,
+        num: Number(num) || undefined,
+        bool: Boolean(setBool) || undefined,
+        date: d?.toDateString() || undefined,
+        datetime: dt?.toDateString() || undefined,
       }
     });
   } catch (e) {
