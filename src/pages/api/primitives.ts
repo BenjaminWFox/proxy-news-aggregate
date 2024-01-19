@@ -53,16 +53,16 @@ export default function handler(
       } catch {}
     }
 
-    console.log(' - ', str, num, setBool);
+    console.log(' - ', str, num, setBool, d, dt);
 
     res.status(200).json({
       message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}, date: ${date}, datetime: ${datetime}`,
       data: {
-        str: str || undefined,
-        num: Number(num) || undefined,
-        bool: Boolean(setBool) || undefined,
-        date: d?.toDateString() || undefined,
-        datetime: dt?.toDateString() || undefined,
+        str: str || null,
+        num: Number(num) || null,
+        bool: typeof setBool === 'undefined' ? null : Boolean(setBool),
+        date: d?.toLocaleDateString() || null,
+        datetime: dt?.toLocaleString() || null,
       }
     });
   } catch (e) {
