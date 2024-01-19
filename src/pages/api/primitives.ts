@@ -13,7 +13,7 @@ export default function handler(
   }
 
   try {
-    const { str, num, bool } = req.query;
+    const { str, num, bool, date, datetime } = req.query;
 
     if (!str && !num && !bool) {
       res.status(500).json({ message: `You must provide at least one query parameter "str|num|bool"`});
@@ -27,7 +27,7 @@ export default function handler(
       return;
     }
 
-    if ((bool as string).toLowerCase() !== 'false' && (bool as string).toLowerCase() !== 'true') {
+    if (bool && (bool as string).toLowerCase() !== 'false' && (bool as string).toLowerCase() !== 'true') {
       res.status(500).json({ message: "`bool` must be either 'true' or 'false'"});
       console.log('500 - bool not true or false');
 
@@ -38,7 +38,14 @@ export default function handler(
 
     console.log(' - ', str, num, setBool);
 
-    res.status(200).json({ message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}`, data: { str, num: Number(num), bool: Boolean(setBool)}});
+    res.status(200).json({
+      message: `You provided this query; str: ${str}, num: ${num}, bool: ${bool}, date: ${date}, datetime: ${datetime}`,
+      data: {
+        str,
+        num: Number(num),
+        bool: Boolean(setBool)
+      }
+    });
   } catch (e) {
     res.status(500).json({ message: `There was an error: ${JSON.stringify(e)}`});
   }

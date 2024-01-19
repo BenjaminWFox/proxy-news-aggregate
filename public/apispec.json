@@ -12,13 +12,18 @@
     "/primitives": {
       "get": {
         "operationId": "sendQueryParams",
-        "summary": "Send query params `str`, `num`, and/or `bool` to the TESTAPI and receive that same query in response.",
-        "parameters": [
-          {
+        "summary": "Send query params `str`, `num`, and/or `bool`, `date`, and `date-time` to the TESTAPI and receive that same query in response.",
+        "parameters": [{
             "in": "query",
             "name": "str",
             "schema": {
               "type": "string"
+            },
+            "required": true,
+            "x-meta": {
+              "visible": true,
+              "affects": [],
+              "affectedBy": []
             }
           },
           {
@@ -26,6 +31,12 @@
             "name": "num",
             "schema": {
               "type": "number"
+            },
+            "required": true,
+            "x-meta": {
+              "visible": false,
+              "affects": [],
+              "affectedBy": ["bool"]
             }
           },
           {
@@ -33,6 +44,40 @@
             "name": "bool",
             "schema": {
               "type": "boolean"
+            },
+            "required": false,
+            "x-meta": {
+              "visible": true,
+              "affects": ["num"],
+              "affectedBy": []
+            }
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "required": false,
+            "x-meta": {
+              "visible": true,
+              "affects": [],
+              "affectedBy": []
+            }
+          },
+          {
+            "in": "query",
+            "name": "datetime",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "required": false,
+            "x-meta": {
+              "visible": true,
+              "affects": [],
+              "affectedBy": []
             }
           }
         ],
@@ -45,14 +90,30 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "str": {
+                    "message": {
                       "type": "string"
                     },
-                    "num": {
-                      "type": "number"
-                    },
-                    "bool": {
-                      "type": "boolean"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "str": {
+                          "type": "string"
+                        },
+                        "num": {
+                          "type": "number"
+                        },
+                        "bool": {
+                          "type": "boolean"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "datetime": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
                     }
                   }
                 }
@@ -264,7 +325,7 @@
           }
         }
       }
-    }, 
+    },
     "/list": {
       "post": {
         "operationId": "sendListBody",
@@ -334,6 +395,6 @@
           }
         }
       }
-    }    
+    }
   }
 }
